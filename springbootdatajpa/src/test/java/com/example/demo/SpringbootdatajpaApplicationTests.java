@@ -27,10 +27,22 @@ class SpringbootdatajpaApplicationTests {
 		s.setName("ROhan");
 		s.setTestScore(100);
 		sr.save(s);
+		
+		Student student = sr.findById(12l).get();
+		assertNotNull(student);
+
+	}
+
+	@Test
+	void tesSaveStudent() {
 
 		Student student = sr.findById(12l).get();
 
-		assertNotNull(student);
+		System.out.println(student);
+		// assertNotNull(student);
+		sr.deleteById(12l);
+		// assertNull(sr.findById(12l).get());
+
 	}
 
 }
