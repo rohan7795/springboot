@@ -3,6 +3,7 @@ package com.springweb;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
@@ -15,12 +16,19 @@ import static org.junit.Assert.*;
 @SpringBootTest
 class ProductrestapiApplicationTests {
 
+	
+	@Value("${productrestapi.services.url}")
+	String baseUrl;
+	
+	
 	@Autowired
 	RestTemplate restT;
 
 	@Test
 	void getProduct() {
-		Product product = restT.getForObject("http://localhost:8080/rohanapp/products/11", Product.class);
+		
+		System.out.println(baseUrl);
+		Product product = restT.getForObject(baseUrl+"11", Product.class);
 
 		assertNotNull(product);
 		assertEquals(product.getName(), "nestle");
@@ -33,7 +41,7 @@ class ProductrestapiApplicationTests {
 		product.setName("nestle");
 		product.setDescription("mil product");
 		product.setPrice(90);
-		Product newProduct = restT.postForObject("http://localhost:8080/rohanapp/products/", product, Product.class);
+		Product newProduct = restT.postForObject(baseUrl, product, Product.class);
 		
 		
 
@@ -43,13 +51,14 @@ class ProductrestapiApplicationTests {
 	
 	@Test
 	void updateProduct() {
-		Product product = restT.getForObject("http://localhost:8080/rohanapp/products/11", Product.class);
+		Product product = restT.getForObject(baseUrl+"11", Product.class);
 		
-		product.setPrice(10000000);
+		System.out.println(baseUrl);
+		
+		product.setPrice(800000);
 //		String pr = "http://localhost:8080/rohanapp/products/"+product.getId();
-		restT.put("http://localhost:8080/rohanapp/products/",product);
+		restT.put(baseUrl,product);
 		
-	
 	}
 
 }
