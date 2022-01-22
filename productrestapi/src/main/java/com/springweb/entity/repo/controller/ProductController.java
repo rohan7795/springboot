@@ -26,7 +26,8 @@ public class ProductController {
 	@Autowired
 	ProductRepository prepo;
 
-	@Cacheable("product-cache")
+
+	
 	@RequestMapping(value = "/products/", method = RequestMethod.GET)
 	public List<Product> getProducts() {
 		return prepo.findAll();
@@ -38,6 +39,7 @@ public class ProductController {
 	public Product getProduct(@PathVariable("id")int id) {
 		return prepo.findById(id).get();
 	}
+	
 	
 	@RequestMapping(value = "/products/", method = RequestMethod.POST)
 	public Product createProduct(@RequestBody Product product) {
